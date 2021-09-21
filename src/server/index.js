@@ -1,21 +1,18 @@
 import express from 'express'
 import { createServer } from "http";
 import { Server } from "socket.io";
-
 import * as path from 'path';
+
 const app = express();
 app.use(express.static(path.join(__dirname, '../../build')));
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
-  }
-});
+const io = new Server(httpServer);
 
 const port = process.env.PORT || 8080;
 
 const rooms = new Map([]);
+
+app.get('/', (req, res, next) => res.sendFile(__dirname + './index.html'));
 
 app.get('/rooms/:id', (req, res) => {
   const roomID = req.params.id;

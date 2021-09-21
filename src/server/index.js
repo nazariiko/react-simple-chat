@@ -4,6 +4,7 @@ import { Server } from "socket.io";
 import * as path from 'path';
 
 const app = express();
+const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, '../../build')));
 const httpServer = createServer(app);
 const io = new Server(httpServer);
